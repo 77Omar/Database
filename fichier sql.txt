@@ -1,0 +1,30 @@
+1) SELECT Nmed, nom FROM `medecin` where specialiste="S1"
+2) SELECT nom FROM `specialite`
+3) SELECT Nmalad, nom, date_naissance FROM `malade` WHERE sexe="M" ORDER BY date_naissance DESC
+4) SELECT Nmalad, nom, date_naissance FROM `malade` WHERE sexe="F" AND adresse LIKE '%p%' ORDER BY nom ASC
+5) SELECT malade.Nmalad, malade.nom, malade.date_naissance, chambre.nchamb, chambre.categorie,
+ chambre.type FROM `malade`, `chambre`, `lit` WHERE malade.Nmalad=lit.nlit AND lit.nchamb= chambre.nchamb
+6) SELECT malade.Nmalad, malade.nom, malade.date_naissance, departement.Ndpart, departement.nom FROM `malade`, `departement`, `interner` 
+WHERE interner.Ndpart= departement.Ndpart AND malade.Nmalad= interner.Nmalad AND malade.date_naissance= "2012-04-22"
+7) SELECT malade.Nmalad, malade.nom, malade.date_naissance FROM `malade`, `suivre`, `medecin`
+ WHERE suivre.Nmalad=malade.Nmalad AND medecin.Nmed=suivre.Nmed AND medecin.nom="M3"
+8)SELECT malade.Nmalad, malade.nom, malade.date_naissance FROM `malade`, `suivre`, `medecin` ,`occuper`
+ WHERE suivre.Nmalad=malade.Nmalad AND medecin.Nmed=suivre.Nmed AND medecin.nom="M3" AND occuper.nlit="21"
+9)SELECT malade.Nmalad, malade.nom, malade.date_naissance FROM `malade`, `occuper`,`lit` 
+WHERE malade.Nmalad=occuper.Nmalad AND occuper.nlit=21
+10)SELECT malade.Nmalad, malade.nom, malade.date_naissance,feuille_evolution.nfeuille,feuille_evolution.date FROM
+ `malade`, `feuille_evolution` WHERE feuille_evolution.Nmalad=malade.Nmalad AND malade.Nmalad=11
+11)SELECT COUNT(malade.Nmalad) as numberpatient FROM `malade`, `chambre`,`departement`,`interner` WHERE interner.Ndpart=departement.Ndpart 
+AND malade.Nmalad=interner.Nmalad GROUP BY departement.nom ORDER BY numberpatient DESC LIMIT 1
+12) SELECT malade.Nmalad, malade.nom, malade.adresse, medecin.nom FROM `malade`,`medecin`,`suivre`,`departement`,`intervenir` 
+WHERE suivre.Nmalad=malade.Nmalad AND medecin.Nmed=suivre.Nmed AND intervenir.Ndpart=departement.Ndpart 
+AND medecin.Nmed=intervenir.Nmed AND departement.Ndpart='D2'
+13) SELECT malade.Nmalad, malade.nom, malade.adresse, interner.date as internemois FROM `malade`,`interner`,`departement`
+ WHERE interner.Nmalad=malade.Nmalad AND (MONTH(interner.date)=02 or MONTH(interner.date)=12)
+14) select chambre.*, COUNT(occuper.Nmalad) as occuperplus FROM chambre, lit, malade, occuper WHERE occuper.nlit= lit.nlit
+ AND malade.Nmalad=occuper.Nmalad and lit.nchamb= chambre.nchamb group by lit.nchamb order by occuperplus DESC LIMIT 1
+15) select chambre.*, COUNT(occuper.Nmalad) as occuperplus FROM chambre, lit, malade, occuper, departement WHERE occuper.nlit= lit.nlit 
+AND malade.Nmalad=occuper.Nmalad AND lit.nchamb= chambre.nchamb AND chambre.nchamb=departement.Ndpart
+ group by chambre.Ndpart order by occuperplus DESC LIMIT 1
+17) SELECT medecin.*, COUNT(suivre.Nmalad) as suivreplus FROM medecin, malade, suivre WHERE suivre.Nmalad=malade.Nmalad 
+AND medecin.Nmed=suivre.Nmed GROUP BY medecin.Nmed ORDER BY suivreplus DESC limit 1
