@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mar. 19 mai 2020 à 22:45
+-- Généré le :  mer. 20 mai 2020 à 00:20
 -- Version du serveur :  10.1.37-MariaDB
 -- Version de PHP :  7.2.13
 
@@ -222,16 +222,17 @@ INSERT INTO `medecin` (`Nmed`, `nom`, `specialiste`) VALUES
 
 CREATE TABLE `occuper` (
   `nlit` int(11) NOT NULL,
-  `Nmalad` int(11) NOT NULL
+  `Nmalad` int(11) NOT NULL,
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `occuper`
 --
 
-INSERT INTO `occuper` (`nlit`, `Nmalad`) VALUES
-(1, 2),
-(3, 4);
+INSERT INTO `occuper` (`nlit`, `Nmalad`, `date`) VALUES
+(1, 2, '2020-03-01'),
+(3, 4, '2020-05-19');
 
 -- --------------------------------------------------------
 
@@ -402,12 +403,6 @@ ALTER TABLE `malade`
 --
 ALTER TABLE `medecin`
   MODIFY `Nmed` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT pour la table `occuper`
---
-ALTER TABLE `occuper`
-  MODIFY `nlit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `specialite`
